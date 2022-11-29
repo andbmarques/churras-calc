@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Home() {
+export default function Home({ navigation }) {
 
     const [data, setData] = useState([
         { key: '1', title: 'Churras Aniversário', peoples: 8, value: 200 },
@@ -23,11 +23,11 @@ export default function Home() {
                             <Text style={styles.itemTitle}>{item.title}</Text>
                             <View style={styles.itemIconsContainer}>
                                 <View style={styles.itemIconsContent}>
-                                    <AntDesign name="user" size={24} color="black" />
+                                    <AntDesign name="user" size={24} color="#003049" />
                                     <Text style={styles.itemText} >{item.peoples}</Text>
                                 </View>
                                 <View style={styles.itemIconsContent}>
-                                    <AntDesign name="wallet" size={24} color="black" />
+                                    <AntDesign name="wallet" size={24} color="#003049" />
                                     <Text style={styles.itemText}>R${item.value}</Text>
                                 </View>
                             </View>
@@ -35,7 +35,7 @@ export default function Home() {
                     ))
                 }
             </ScrollView>
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Calculator')} >
                 <Text style={{ color: '#ffffff', fontWeight: 'bold', fontSize: 25 }}>+</Text>
             </TouchableOpacity>
         </View>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#DDDDDD',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     title: {
         color: '#FFFFFF',
@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     logoIcon: {
         fontSize: 30,
         color: '#D62828',
-        marginBottom: -5
+        marginBottom: -5,
+        marginLeft: -10
     },
     content: {
         padding: 20
@@ -111,6 +112,8 @@ const styles = StyleSheet.create({
     },
     itemText: {
         marginRight: 30,
-        marginLeft: 10
+        marginLeft: 10,
+        fontSize: 18,
+        fontWeight: '500'
     }
 })

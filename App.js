@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Onboarding from './src/Pages/Onboarding';
 import Home from './src/Pages/Home';
+import Calculator from './src/Pages/Calculator';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Onboarding" component={Onboarding} /> 
         <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
+        <Stack.Screen name="Calculator" component={Calculator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
