@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const slides = [
   {
@@ -27,11 +28,27 @@ const slides = [
 ];
 
 export default function Onboarding({ navigation }) {
+
+  const finishOnboarding = async (navigation) => {
+
+    try {
+
+      const jsonValue = JSON.stringify({ firstTime: false })
+      await AsyncStorage.setItem('@FirstTime', jsonValue)
+      console.log(jsonValue)
+
+    } catch (e){
+      console.log(e);
+    }
+
+    navigation.navigate('Home');
+  }
+  
   return (
     <AppIntroSlider
       data={slides}
       doneLabel={"Continuar"}
-      onDone={() => navigation.navigate('Home')}
+      onDone={() => finishOnboarding(navigation)}
       nextLabel={"Proximo"}
       renderItem={({ item }) => (
         <View style={[styles.container, { backgroundColor: item.backgroundColor }]}>
