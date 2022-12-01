@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, ScrollView, Text, KeyboardAvoidingView } from 'react-native';
 import { styles } from './styles';
 import NumericInput from 'react-native-numeric-input'
 import Hr from '../../Components/Hr/hr';
-import { Button, TextInput, Checkbox } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
+import validateComma from '../../Utils/validateComma';
+import Checkbox from '../../Components/Checkbox/checkbox';
 
 export default function Calculator() {
 
@@ -103,8 +105,10 @@ export default function Calculator() {
                         style={styles.textInput}
                     />
                     <TextInput
-                        onChangeText={value => setData({ ...data, meat: { ...data.meat, beef: { ...data.meat.beef, price: parseFloat(value) } } })}
-                        value={data.meat.beef.price.toString()}
+                        onChangeText={value => {
+                            value = validateComma(value);
+                            setData({ ...data, meat: { ...data.meat, beef: { ...data.meat.beef, price: parseFloat(value) } } })
+                        }}
                         label={"Preço / KG"}
                         mode={'outlined'}
                         placeholder="Ex: R$39,00 / KG"
@@ -125,8 +129,10 @@ export default function Calculator() {
                         disabled={haveChicken ? true : false}
                     />
                     <TextInput
-                        onChangeText={value => setData({ ...data, meat: { ...data.meat, chicken: { ...data.meat.chicken, price: parseFloat(value) } } })}
-                        value={data.meat.chicken.price.toString()}
+                        onChangeText={(value) => {
+                            value = validateComma(value);
+                            setData({ ...data, meat: { ...data.meat, chicken: { ...data.meat.chicken, price: parseFloat(value) } } })
+                        }}
                         label={"Preço / 1/2 KG"}
                         mode={'outlined'}
                         placeholder="Ex: R$14,90 / KG"
@@ -134,24 +140,7 @@ export default function Calculator() {
                         style={styles.textInput}
                         disabled={haveChicken ? true : false}
                     />
-                    <View style={[styles.checkbox, Platform.OS === 'ios' ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : {}]}>
-                        <Checkbox
-                            status={haveChicken ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setHaveChicken(!haveChicken);
-                            }}
-                            uncheckedColor='#003049'
-                            color='#F77F00'
-                        />
-                        <Text
-                            style={styles.checkboxText}
-                            onPress={() => {
-                                setHaveChicken(!haveChicken);
-                            }}
-                        >
-                            Não terá
-                        </Text>
-                    </View>
+                    <Checkbox state={haveChicken} setState={setHaveChicken} title={'Não terá'} style={styles} />
                 </View>
                 {/* SUINE */}
                 <View style={styles.inputContainer}>
@@ -167,8 +156,10 @@ export default function Calculator() {
 
                     />
                     <TextInput
-                        onChangeText={value => setData({ ...data, meat: { ...data.meat, suine: { ...data.meat.suine, price: parseFloat(value) } } })}
-                        value={data.meat.suine.price.toString()}
+                        onChangeText={value => {
+                            value = validateComma(value);
+                            setData({ ...data, meat: { ...data.meat, suine: { ...data.meat.suine, price: parseFloat(value) } } })
+                        }}
                         label={"Preço / 1/2 KG"}
                         mode={'outlined'}
                         placeholder="Ex: R$14,90 / KG"
@@ -177,24 +168,7 @@ export default function Calculator() {
                         disabled={haveSuine ? true : false}
 
                     />
-                    <View style={[styles.checkbox, Platform.OS === 'ios' ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : {}]}>
-                        <Checkbox
-                            status={haveSuine ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setHaveSuine(!haveSuine);
-                            }}
-                            uncheckedColor='#003049'
-                            color='#F77F00'
-                        />
-                        <Text
-                            style={styles.checkboxText}
-                            onPress={() => {
-                                setHaveSuine(!haveSuine);
-                            }}
-                        >
-                            Não terá
-                        </Text>
-                    </View>
+                    <Checkbox state={haveSuine} setState={setHaveSuine} title={'Não terá'} style={styles} />
                 </View>
                 <Hr />
                 {/* SIDE DISH SECTION */}
@@ -212,8 +186,10 @@ export default function Calculator() {
                         disabled={haveGarlicBread ? true : false}
                     />
                     <TextInput
-                        onChangeText={value => setData({ ...data, sideDish: { ...data.sideDish, garlicBread: { ...data.sideDish.garlicBread, price: parseFloat(value) } } })}
-                        value={data.sideDish.garlicBread.price.toString()}
+                        onChangeText={value => {
+                            value = validateComma(value);
+                            setData({ ...data, sideDish: { ...data.sideDish, garlicBread: { ...data.sideDish.garlicBread, price: parseFloat(value) } } })
+                        }}
                         label={"Preço / 240G"}
                         mode={'outlined'}
                         placeholder="Ex: R$14,90 / KG"
@@ -221,24 +197,7 @@ export default function Calculator() {
                         style={styles.textInput}
                         disabled={haveGarlicBread ? true : false}
                     />
-                    <View style={[styles.checkbox, Platform.OS === 'ios' ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : {}]}>
-                        <Checkbox
-                            status={haveGarlicBread ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setHaveGarlicBread(!haveGarlicBread);
-                            }}
-                            uncheckedColor='#003049'
-                            color='#F77F00'
-                        />
-                        <Text
-                            style={styles.checkboxText}
-                            onPress={() => {
-                                setHaveGarlicBread(!haveGarlicBread);
-                            }}
-                        >
-                            Não terá
-                        </Text>
-                    </View>
+                    <Checkbox state={haveGarlicBread} setState={setHaveGarlicBread} title={'Não terá'} style={styles} />
                 </View>
                 {/* CHEESE */}
                 <View style={styles.inputContainer}>
@@ -254,8 +213,10 @@ export default function Calculator() {
 
                     />
                     <TextInput
-                        onChangeText={value => setData({ ...data, sideDish: { ...data.sideDish, cheese: { ...data.sideDish.cheese, price: parseFloat(value) } } })}
-                        value={data.sideDish.cheese.price.toString()}
+                        onChangeText={value => {
+                            value = validateComma(value);
+                            setData({ ...data, sideDish: { ...data.sideDish, cheese: { ...data.sideDish.cheese, price: parseFloat(value) } } })
+                        }}
                         label={"Preço / KG"}
                         mode={'outlined'}
                         placeholder="Ex: R$29,90 / KG"
@@ -264,24 +225,7 @@ export default function Calculator() {
                         disabled={haveCheese ? true : false}
 
                     />
-                    <View style={[styles.checkbox, Platform.OS === 'ios' ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : {}]}>
-                        <Checkbox
-                            status={haveCheese ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setHaveCheese(!haveCheese);
-                            }}
-                            uncheckedColor='#003049'
-                            color='#F77F00'
-                        />
-                        <Text
-                            style={styles.checkboxText}
-                            onPress={() => {
-                                setHaveCheese(!haveCheese);
-                            }}
-                        >
-                            Não terá
-                        </Text>
-                    </View>
+                    <Checkbox state={haveCheese} setState={setHaveCheese} title={'Não terá'} style={styles} />
                 </View>
                 <Hr />
                 {/* FINISHING SECTION */}
@@ -296,24 +240,7 @@ export default function Calculator() {
                     style={[styles.textInput, { marginBottom: 25 }]}
                 />
 
-                <View style={[styles.checkbox, Platform.OS === 'ios' ? { flexDirection: 'row-reverse', alignSelf: 'flex-start' } : {}]}>
-                    <Checkbox
-                        status={haveBeer ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setHaveBeer(!haveBeer);
-                        }}
-                        uncheckedColor='#003049'
-                        color='#F77F00'
-                    />
-                    <Text
-                        style={styles.checkboxText}
-                        onPress={() => {
-                            setHaveBeer(!haveBeer);
-                        }}
-                    >
-                        Cerveja?
-                    </Text>
-                </View>
+                <Checkbox state={haveBeer} setState={setHaveBeer} title={'Cerveja?'} style={styles} />
 
                 <View style={styles.counterInputContainer} pointerEvents={haveBeer ? 'auto' : 'none'} >
                     <Text style={styles.counterInputLabel}>Litrão / Pessoa</Text>
